@@ -5,20 +5,9 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      CCTV GENERATION
+      Hello Gary, this gon be a kewl website shop BUY UBY BUY
+      https://github.com/LukeDate/cctvgeneration this is the repo I've made for it for now
     </div>
   );
 }
