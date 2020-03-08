@@ -1,13 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Home from './components/home';
+import Navigation from './components/navigation';
+import Store from './components/store';
+import Contact from './components/contact';
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+
 
 function App() {
   return (
     <div className="App">
-      CCTV GENERATION
-      Hello Gary, this gon be a kewl website shop BUY UBY BUY
-      https://github.com/LukeDate/cctvgeneration this is the repo I've made for it for now
+      <Router>
+        <Navigation />
+        <Switch>
+          <Route exact path="/">
+              <Home />
+          </Route>
+          <Route path="/store">
+              <Store />
+          </Route>
+          <Route path="/contact">
+              <Contact />
+          </Route>
+        </Switch>
+      </Router>
+      
     </div>
   );
 }

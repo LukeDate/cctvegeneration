@@ -1,0 +1,10 @@
+.tiles-wrapper {
+    height: 200px;
+    width: 200px;
+    transform: rotateY('180deg');
+
+    .tile-image {
+        width: 100px;
+        height: 100px;
+    }
+}
