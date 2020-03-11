@@ -16,6 +16,9 @@ const Navigation = () => {
             <li>
               <Link to="/contact">Contact</Link>
             </li>
+            <li>
+              <Link to="/basket"><img height="20px" width="20px" src="/assets/shopping-cart.png"/></Link>
+            </li>
           </ul>
     </nav>
     )

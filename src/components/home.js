@@ -13,10 +13,9 @@ const Home = () => {
     let [currentImage, changeImage] = useState(0);
 
     const renderImage = (src, id) => (
-    <>
-    {console.log('id', id)}
+    
     <img id={`image-id-${id}`} className={`splash-image-${id}`} src={`/assets/cctv-assets/${src}`} />
-    </>
+    
     )
     
     let setImageIndex = () => {

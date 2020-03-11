@@ -1,29 +1,15 @@
 import React from 'react';
 import Tiles from './tiles';
 import '../styles/store.scss';
+import { connect } from 'react-redux';
+import { addToCart } from '../redux/actions/cartActions';
 
-const Store = () => {
 
-    let Images = [
-        {
-            "title":"T-Shirt",
-            "imageUrl": {
-                "front": "/assets/cctv-assets/front.jpg",
-                "back": "/assets/cctv-assets/back.jpg"
-            }
+const Store = ({ items, ...props }) => {
 
-        }
-    ]
-
+    console.log(props);
     const RenderTiles = () => {
-        let tiles = [];
-        
-        for(var i = 0; i <= 24; i++) {
-            tiles.push(<Tiles title={Images[0].title} image={Images[0].imageUrl} />)
-        }
-
-        return tiles;
-        
+            return items.map((image, id) => <Tiles key={id} handleClick={props.addToCart} itemId={id} title={image.title} image={image.imageUrl} />) 
     }
 
     return (
@@ -35,4 +21,15 @@ const Store = () => {
     )
 }
 
-export default Store;
+const mapStateToProps = (state)=>{
+    return {
+      items: state.items
+    }
+  }
+const mapDispatchToProps= (dispatch)=>{
+    return{
+        addToCart: (id)=>{dispatch(addToCart(id))}
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Store);

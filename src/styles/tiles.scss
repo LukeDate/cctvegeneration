@@ -1,4 +1,7 @@
 .tiles-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     height: 200px;
     width: 200px;
     transform: rotateY('180deg');
