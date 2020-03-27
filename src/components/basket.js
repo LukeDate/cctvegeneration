@@ -4,7 +4,6 @@ import '../styles/basket.scss';
 import { removeItem, addQuantity, subQuantity } from '../redux/actions/cartActions';
 
 const Basket = ({ ...props }) => {
-    console.log('PROPS', props);
     const handleRemove = (id) => {
         props.removeItem(id);
     }
@@ -21,6 +20,7 @@ const Basket = ({ ...props }) => {
         return props.items.map((item, id) => (
         <div key={id} className="basket-item-wrapper">
             <img className="basket-item" src={item.imageUrl.front} />
+            <div>{props.items[id].quantity}</div>
             <button className="button-add" onClick={() => handleAddQuantity(item.id)}>+</button>
             <button className="button-remove" onClick={() => handleSubQuantity(item.id)}>-</button>
             <button className="button-delete" onClick={() => handleRemove(item.id)}>Remove from basket</button>

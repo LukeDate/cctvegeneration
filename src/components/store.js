@@ -7,13 +7,15 @@ import { addToCart } from '../redux/actions/cartActions';
 
 const Store = ({ items, ...props }) => {
 
-    console.log(props);
     const RenderTiles = () => {
             return items.map((image, id) => <Tiles key={id} handleClick={props.addToCart} itemId={id} title={image.title} image={image.imageUrl} />) 
     }
 
     return (
         <div className="store-wrapper">
+            <div className="store-banner">
+                <img src="/assets/cctv-assets/shop-image.jpg" />
+            </div>
             {
                 RenderTiles()
             }

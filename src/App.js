@@ -1,5 +1,5 @@
-import React from 'react';
-import './App.css';
+import React, { useState } from 'react';
+import './App.scss';
 import Home from './components/home';
 import Navigation from './components/navigation';
 import Store from './components/store';
@@ -7,14 +7,18 @@ import Contact from './components/contact';
 import Basket from './components/basket';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 
+
 function App() {
+
+  const [hasScrolled, setScroll] = useState(false);
+
   return (
     <div className="App">
       <Router>
-        <Navigation />
+        <Navigation hasClicked={setScroll}/>
         <Switch>
           <Route exact path="/">
-              <Home />
+              <Home hasScrolled={hasScrolled}/>
           </Route>
           <Route path="/store">
               <Store />

@@ -13,7 +13,6 @@ const Items = [
         },
         "id": 0,
         "price": 69
-
     },
     {
         "title":"T-Shirt",
@@ -23,7 +22,6 @@ const Items = [
         },
         "id": 1,
         "price": 69
-
     },
     {
         "title":"T-Shirt",
@@ -33,7 +31,6 @@ const Items = [
         },
         "id": 2,
         "price": 69
-
     },
     {
         "title":"T-Shirt",
@@ -43,7 +40,6 @@ const Items = [
         },
         "id": 3,
         "price": 69
-
     },
     {
         "title":"T-Shirt",
@@ -53,7 +49,6 @@ const Items = [
         },
         "id": 4,
         "price": 69
-
     },
     {
         "title":"T-Shirt",
@@ -63,7 +58,6 @@ const Items = [
         },
         "id": 5,
         "price": 69
-
     }
 ]
 
@@ -81,7 +75,7 @@ const cartReducer = (state = initState, action) => {
         case ADD_TO_CART:
 
             let existed_item = state.addedItems.find(item => action.id === item.id);
-    
+
             if(existed_item) {
                 addedItem.quantity += 1;
                 return {
@@ -99,25 +93,29 @@ const cartReducer = (state = initState, action) => {
         };
 
         case REMOVE_ITEM:
-            let itemToRemove= state.addedItems.find(item => action.id === item.id)
+            let itemToRemove = state.addedItems.find(item => action.id === item.id)
             let new_items = state.addedItems.filter(item => action.id !== item.id)
+            console.log('new_items', new_items);
             let newTotal = state.total - (itemToRemove.price *  itemToRemove.quantity)
+            addedItem.quantity = 0;
             return {
                 ...state,
                 addedItems: new_items,
                 total: newTotal
             }
-            
+
         case ADD_QUANTITY:
             addedItem.quantity += 1;
-            let newQuantity = state.total + addedItem.price;
+            let newTotalAdd= state.total + addedItem.price;
             return {
                 ...state,
-                total: newQuantity
+                addedItems: [...state.addedItems],
+                total: newTotalAdd
             }
         case SUB_QUANTITY:
+
             if(addedItem.quantity === 1) {
-                let new_items = state.addedItems.filter(item=>item.id !== action.id)
+                let new_items = state.addedItems.filter(item => item.id !== action.id)
                 let newTotal = state.total - addedItem.price
                 return {
                     ...state,
@@ -129,7 +127,8 @@ const cartReducer = (state = initState, action) => {
                 let newTotal = state.total - addedItem.price;
                 return {
                     ...state,
-                    total: newTotal
+                    addedItems: [...state.addedItems],
+                    total: newTotal                
                 }
             }
             
