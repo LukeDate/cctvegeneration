@@ -4,7 +4,7 @@
   "description": "backend for cctv",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon --watch backend --exec babel-node backend/server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/LukeDate/cctvegeneration/issues"
   },
-  "homepage": "https://github.com/LukeDate/cctvegeneration#readme"
+  "homepage": "https://github.com/LukeDate/cctvegeneration#readme",
+  "dependencies": {
+    "@babel/cli": "^7.12.16",
+    "@babel/core": "^7.12.16",
+    "@babel/node": "^7.12.16",
+    "@babel/preset-env": "^7.12.16",
+    "babel-node": "0.0.1-security",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
 }
