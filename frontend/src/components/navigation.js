@@ -1,10 +1,12 @@
 import React from 'react';
 import '../styles/navigation.scss';
 import { Link } from "react-router-dom";
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 
 
-const Navigation = ({...props}) => {
+const Navigation = () => {
+  const cart = useSelector(state => state.cart);
+  console.log(cart);
     return (
     <nav className="nav-wrapper">
         <img src="/assets/cctv-assets/circle-squared.jpg" width="100px" height="100px"/>
@@ -14,7 +16,7 @@ const Navigation = ({...props}) => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <div to="/about" onClick={() => props.hasClicked(true)}>about</div>
+              <div to="/about">about</div>
             </li>
             <li>
               <Link to="/store">Store</Link>
@@ -27,7 +29,7 @@ const Navigation = ({...props}) => {
           </ul>    
       <div className="basket-style">
       <Link to="/basket"><img height="20px" width="20px" src="/assets/shopping-cart.png"/></Link>
-        {props.items.length} items {props.total === 0 ? '' : `£${props.total}` }
+        {cart.cartItems.length}
       </div>
     </nav>
     )

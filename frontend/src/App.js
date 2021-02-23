@@ -10,7 +10,6 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 
 function App () {
   const [hasScrolled, setScroll] = useState(false)
-
   return (
     <div className="App">
       <Router>
@@ -22,13 +21,13 @@ function App () {
           <Route path="/store">
               <Store />
           </Route>
-          <Route path="/product/:id">
+          <Route path="/products/:id">
             <ProductScreen />
           </Route>
           <Route path="/contact">
               <Contact />
           </Route>
-          <Route path="/basket">
+          <Route path="/basket/:id?">
               <Basket />
           </Route>
         </Switch>

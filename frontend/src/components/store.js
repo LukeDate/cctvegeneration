@@ -1,43 +1,37 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Tiles from './tiles'
 import '../styles/store.scss'
-import { connect } from 'react-redux'
-import { addToCart } from '../redux/actions/cartActions'
+import { useDispatch, useSelector } from 'react-redux'
+import { listProducts } from '../redux/actions/productActions'
 
-const Store = ({ items, ...props }) => {
-  const RenderTiles = () => {
-    return items.map((image, id) =>
+const Store = () => {
+  const productList = useSelector(state => state.productList);
+  const { products, loading, error } = productList;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(listProducts());
+  }, [dispatch])
+  const RenderTiles = (products) => {
+    return loading ? <>loading...</> :  products.map((product) =>
             <Tiles
-                key={id}
-                handleClick={props.addToCart}
-                itemId={id}
-                title={image.title}
-
-                image={image.imageUrl}
-                />)
+                key={product._id}
+                itemId={product._id}
+                title={product.title}
+                image={product.imageUrl}
+                />
+            )
   }
 
   return (
         <div className="store-wrapper">
             <div className="store-banner">
-                <img src="/assets/cctv-assets/shop-image.jpg" />
+                <img src="/assets/cctv-assets/shop-image.jpg" alt="Shop" />
             </div>
             {
-                RenderTiles()
+               loading && products.length === 0 ? <div>loading....</div> : error ?  <div>{error}</div> : RenderTiles(products)
             }
         </div>
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    items: state.items
-  }
-}
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addToCart: (id) => { dispatch(addToCart(id)) }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Store)
+export default Store;

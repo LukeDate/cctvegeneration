@@ -1,4 +1,14 @@
+import bcrypt from 'bcryptjs';
+
 export default {
+  users: [
+    {
+      name: "Luke",
+      email: "luke.date@hotmail.com",
+      password: bcrypt.hashSync('1234', 8),
+      isAdmin: true,
+    }
+  ],
   products: [
     {
       title: 'T-Shirt',
@@ -6,53 +16,53 @@ export default {
         front: '/assets/cctv-assets/front.jpg',
         back: '/assets/cctv-assets/back.jpg'
       },
-      id: 0,
-      price: 69
+      price: 69,
+      countInStock: 5
     },
     {
-      title: 'T-Shirt',
+      title: 'T-Shirt One',
       imageUrl: {
         front: '/assets/cctv-assets/front.jpg',
         back: '/assets/cctv-assets/back.jpg'
       },
-      id: 1,
-      price: 69
+      price: 420,
+      countInStock: 5
     },
     {
-      title: 'T-Shirt',
+      title: 'T-Shirt Two',
       imageUrl: {
         front: '/assets/cctv-assets/front.jpg',
         back: '/assets/cctv-assets/back.jpg'
       },
-      id: 2,
-      price: 69
+      price: 123,
+      countInStock: 5
     },
     {
-      title: 'T-Shirt',
+      title: 'T-Shirt Three',
       imageUrl: {
         front: '/assets/cctv-assets/front.jpg',
         back: '/assets/cctv-assets/back.jpg'
       },
-      id: 3,
-      price: 69
+      price: 169,
+      countInStock: 5
     },
     {
-      title: 'T-Shirt',
+      title: 'T-Shirt Four',
       imageUrl: {
         front: '/assets/cctv-assets/front.jpg',
         back: '/assets/cctv-assets/back.jpg'
       },
-      id: 4,
-      price: 69
+      price: 269,
+      countInStock: 5
     },
     {
-      title: 'T-Shirt',
+      title: 'T-Shirt Five',
       imageUrl: {
         front: '/assets/cctv-assets/front.jpg',
         back: '/assets/cctv-assets/back.jpg'
       },
-      id: 5,
-      price: 69
+      price: 569,
+      countInStock: 0
     }
   ]
 }

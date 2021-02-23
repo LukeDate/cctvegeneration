@@ -1,35 +1,26 @@
-
-// ACTIONS ARE HERE --> SHOULD GO IN THEIR OWN FILES
-export const ADD_TO_CART = 'ADD_TO_CART'
-export const REMOVE_ITEM = 'REMOVE_ITEM'
-export const SUB_QUANTITY = 'SUB_QUANTITY'
-export const ADD_QUANTITY = 'ADD_QUANTITY'
+import axios from "axios"
+import Cookie from "js-cookie";
+import { ADD_TO_CART, ADD_TO_CART_FAILED, REMOVE_FROM_CART } from "../constants/constants";
 
 // ACTION CREATORS ARE HERE
-export const addToCart = (id) => {
-  return {
-    type: ADD_TO_CART,
-    id
+export const addToCart = (id, qty) => async (dispatch, getState) => {
+  try {
+    const { data } = await axios.get("/api/products/" + id);
+    dispatch ({ type: ADD_TO_CART, payload: {
+      product: data,
+      quantity: qty,
+    }})
+    const { cart: { cartItems } } = getState();
+    Cookie.set("cartItems", JSON.stringify(cartItems));
+  } catch(error) {
+    dispatch({ type: ADD_TO_CART_FAILED, payload: error.message })
   }
 }
 
-export const removeItem = id => {
-  return {
-    type: REMOVE_ITEM,
-    id
-  }
-}
-
-export const addQuantity = id => {
-  return {
-    type: ADD_QUANTITY,
-    id
-  }
-}
-
-export const subQuantity = id => {
-  return {
-    type: SUB_QUANTITY,
-    id
+export const removeFromCart = (id) => (dispatch) => {
+  try {
+    dispatch({ type: REMOVE_FROM_CART, payload: id });
+  } catch (error) {
+    
   }
 }

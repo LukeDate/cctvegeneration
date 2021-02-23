@@ -1,29 +1,43 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
 import '../styles/basket.scss';
-import { removeItem, addQuantity, subQuantity } from '../redux/actions/cartActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, removeFromCart } from '../redux/actions/cartActions';
+import { useLocation, useParams } from 'react-router-dom';
 
-const Basket = ({ ...props }) => {
-    const handleRemove = (id) => {
-        props.removeItem(id);
-    }
+const Basket = () => {
+    const cart = useSelector(state => state.cart);
+    const { id } = useParams();
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
-    const handleAddQuantity = (id) => {
-        props.addQuantity(id)
-    }
+    const renderDropDown = (product) => {
+        return [...Array(product.product.countInStock).keys()].map(x => <option value={x+1}>{x+1}</option>)  
+      }
 
-    const handleSubQuantity = (id) => {
-        props.subQuantity(id)
+    useEffect(() => {
+        if(id) {
+            dispatch(addToCart(id, qty))
+        }
+    }, []);
+
+    const totalPrice = () => {
+        let total = [];
+        cart.cartItems.map(item => {
+            total.push(item.quantity * item.product.product.price);
+        })
+        return total.reduce((a, b) => a + b, 0);
     }
-    
     const renderItems = () => {
-        return props.items.map((item, id) => (
-        <div key={id} className="basket-item-wrapper">
-            <img className="basket-item" src={item.imageUrl.front} />
-            <div>{props.items[id].quantity}</div>
-            <button className="button-add" onClick={() => handleAddQuantity(item.id)}>+</button>
-            <button className="button-remove" onClick={() => handleSubQuantity(item.id)}>-</button>
-            <button className="button-delete" onClick={() => handleRemove(item.id)}>Remove from basket</button>
+
+        return cart.cartItems.map((item) => (
+        <div key={item.product.id} className="basket-item-wrapper">
+            <img className="basket-item" src={item.product.product.imageUrl.front} alt="Product Item"/>
+            <div>{item.quantity}</div>
+            <div>
+                Qty: <select value={item.quantity} onChange={(e) => dispatch(addToCart(item.product.product.id, Number(e.target.value)))}>{renderDropDown(item.product)}</select>
+                </div>
+            <button className="button-delete" onClick={() => dispatch(removeFromCart(item.product.product.id))}>Remove from basket</button>
         </div>
         ))
     }
@@ -33,24 +47,10 @@ const Basket = ({ ...props }) => {
             {
                 renderItems()
             }
-        <div>Your total comes to: {props.total} Gazzer Dollars</div>
+        <div>Your total comes to: {totalPrice()} Gazzer Dollars</div>
+        <button style={{ height: '20px' }}>Proceed to Checkout</button>
         </div>
     )
 }
 
-const mapStateToProps = (state)=>{
-    return{
-        items: state.addedItems,
-        total: state.total
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        removeItem: (id) => { dispatch(removeItem(id)) },
-        addQuantity: (id) => { dispatch(addQuantity(id)) },
-        subQuantity: (id) => { dispatch(subQuantity(id)) }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Basket);
+export default Basket;

@@ -4,20 +4,23 @@ import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import cartReducer from './redux/reducers/cartReducer'
-import { PersistGate } from 'redux-persist/integration/react'
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+import { applyMiddleware, combineReducers, createStore, compose } from 'redux'
+import { productDetailsReducer, productListReducer } from './redux/reducers/productReducer'
+import thunk from 'redux-thunk'
+import Cookie from 'js-cookie';
+import { cartReducer } from './redux/reducers/cartReducer'
 
-// const persistConfig = {
-//     key: 'root',
-//     storage,
-//   }
+const cartItems = Cookie.getJSON("cartItems") || [];
 
-// const persistedReducer = persistReducer(persistConfig, cartReducer)
+const initialState = { cart: { cartItems }};
+const reducer = combineReducers({
+    productList: productListReducer,
+    productDetails: productDetailsReducer,
+    cart: cartReducer,
+});
 
-const store = createStore(cartReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+const composeEnhancer =  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducer, initialState, composeEnhancer(applyMiddleware(thunk)));
 // let persistor = persistStore(store)
 
 ReactDOM.render(
