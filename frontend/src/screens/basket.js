@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import '../styles/basket.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '../redux/actions/cartActions';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 const Basket = () => {
     const cart = useSelector(state => state.cart);
@@ -15,11 +15,11 @@ const Basket = () => {
         return [...Array(product.product.countInStock).keys()].map(x => <option value={x+1}>{x+1}</option>)  
       }
 
-    useEffect(() => {
-        if(id) {
-            dispatch(addToCart(id, qty))
-        }
-    }, []);
+    // useEffect(() => {
+    //     if(id) {
+    //         dispatch(addToCart(id, qty))
+    //     }
+    // }, [dispatch, id, qty]);
 
     const totalPrice = () => {
         let total = [];
@@ -29,15 +29,14 @@ const Basket = () => {
         return total.reduce((a, b) => a + b, 0);
     }
     const renderItems = () => {
-
         return cart.cartItems.map((item) => (
-        <div key={item.product.id} className="basket-item-wrapper">
+        <div key={item.product.product._id} className="basket-item-wrapper">
             <img className="basket-item" src={item.product.product.imageUrl.front} alt="Product Item"/>
             <div>{item.quantity}</div>
             <div>
-                Qty: <select value={item.quantity} onChange={(e) => dispatch(addToCart(item.product.product.id, Number(e.target.value)))}>{renderDropDown(item.product)}</select>
+                Qty: <select value={item.quantity} onChange={(e) => dispatch(addToCart(item.product.product._id, Number(e.target.value)))}>{renderDropDown(item.product)}</select>
                 </div>
-            <button className="button-delete" onClick={() => dispatch(removeFromCart(item.product.product.id))}>Remove from basket</button>
+            <button className="button-delete" onClick={() => dispatch(removeFromCart(item.product.product._id))}>Remove from basket</button>
         </div>
         ))
     }
@@ -48,7 +47,7 @@ const Basket = () => {
                 renderItems()
             }
         <div>Your total comes to: {totalPrice()} Gazzer Dollars</div>
-        <button style={{ height: '20px' }}>Proceed to Checkout</button>
+            <Link to="/shipping" style={{ height: '20px' }}>Proceed to Checkout</Link>
         </div>
     )
 }

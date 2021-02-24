@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Tiles from './tiles'
+import Tiles from '../components/tiles'
 import '../styles/store.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { listProducts } from '../redux/actions/productActions'

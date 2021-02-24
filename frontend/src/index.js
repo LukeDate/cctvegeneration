@@ -7,12 +7,19 @@ import { Provider } from 'react-redux'
 import { applyMiddleware, combineReducers, createStore, compose } from 'redux'
 import { productDetailsReducer, productListReducer } from './redux/reducers/productReducer'
 import thunk from 'redux-thunk'
-import Cookie from 'js-cookie';
 import { cartReducer } from './redux/reducers/cartReducer'
 
-const cartItems = Cookie.getJSON("cartItems") || [];
-
-const initialState = { cart: { cartItems }};
+const initialState = { 
+    cart: { 
+        cartItems: localStorage.getItem("cartItems") 
+        ? JSON.parse(localStorage.getItem("cartItems"))
+        : [],
+        shippingAddress: localStorage.getItem("shippingAddress")
+        ? JSON.parse(localStorage.getItem("shippingAddress"))
+        : {},
+        paymentMethod: "PayPal",
+    }
+};
 const reducer = combineReducers({
     productList: productListReducer,
     productDetails: productDetailsReducer,
@@ -27,6 +34,7 @@ ReactDOM.render(
     <Provider store={store}>
         {/* <PersistGate loading={null} persistor={persistor}> */}
             <App />
+            {console.log("local storage", JSON.parse(localStorage.getItem("cartItems")))}
         {/* </PersistGate> */}
     </Provider>
     , document.getElementById('root'))
